@@ -1,0 +1,31 @@
+#
+# Ubuntu Dockerfile
+#
+# https://github.com/dockerfile/ubuntu
+#
+
+# Pull latest base image (Ubuntu 22.04)
+FROM ubuntu:22.04
+
+# Install CUI tools and other utilities
+RUN \
+  apt-get update && \
+  apt-get -y upgrade && \
+  apt-get install -y build-essential software-properties-common \
+  byobu curl git htop man unzip vim wget \
+  nano less screen && \
+  rm -rf /var/lib/apt/lists/*
+
+# Add files.
+ADD root/.bashrc /root/.bashrc
+ADD root/.gitconfig /root/.gitconfig
+ADD root/.scripts /root/.scripts
+
+# Set environment variables.
+ENV HOME /root
+
+# Define working directory.
+WORKDIR /root
+
+# Define default command.
+CMD ["bash"]
